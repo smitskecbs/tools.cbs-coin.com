@@ -482,6 +482,128 @@ body {
   gap: 10px;
 }
 
+.community-section {
+  gap: 16px;
+}
+
+.community-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  align-items: stretch;
+}
+
+.community-card {
+  display: grid;
+  gap: 12px;
+  padding: 20px;
+  border: 1px solid rgba(216, 111, 0, 0.16);
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: 0 10px 32px rgba(216, 111, 0, 0.08);
+}
+
+.community-card-title {
+  margin: 0;
+  font-size: clamp(20px, 3.5vw, 24px);
+  line-height: 1.2;
+  color: #111111;
+}
+
+.community-card-description {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: #555555;
+}
+
+.community-links {
+  display: grid;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.community-link {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid rgba(216, 111, 0, 0.12);
+  border-radius: 16px;
+  background: rgba(255, 250, 245, 0.94);
+  text-decoration: none;
+  color: inherit;
+  transition:
+    transform 140ms ease,
+    border-color 140ms ease,
+    box-shadow 140ms ease,
+    background 140ms ease;
+}
+
+.community-link:hover {
+  transform: translateY(-1px);
+  border-color: rgba(216, 111, 0, 0.28);
+  background: #ffffff;
+  box-shadow: 0 8px 22px rgba(216, 111, 0, 0.08);
+}
+
+.community-link:focus-visible {
+  outline: 2px solid #d86f00;
+  outline-offset: 2px;
+}
+
+.community-link-icon {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 179, 71, 0.16),
+    rgba(255, 255, 255, 0.96)
+  );
+  border: 1px solid rgba(216, 111, 0, 0.12);
+  font-size: 16px;
+  font-weight: 800;
+  color: #d86f00;
+}
+
+.community-link-icon--svg svg {
+  width: 18px;
+  height: 18px;
+  color: #d86f00;
+}
+
+.community-link-content {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.community-link-label {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #b85a00;
+}
+
+.community-link-value {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: #333333;
+  overflow-wrap: anywhere;
+}
+
+.community-link-arrow {
+  font-size: 14px;
+  font-weight: 800;
+  color: #d86f00;
+}
+
 .primary-btn,
 .secondary-btn {
   display: inline-flex;
@@ -529,6 +651,10 @@ body {
 
 @media (max-width: 720px) {
   .toolchain-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .community-grid {
     grid-template-columns: 1fr;
   }
 

@@ -33,6 +33,19 @@ type Resource = {
   url: string
 }
 
+type CommunityLink = {
+  label: string
+  value: string
+  url: string
+  icon: 'x' | 'telegram' | 'web' | 'email'
+}
+
+type CommunityCard = {
+  title: string
+  description: string
+  links: CommunityLink[]
+}
+
 const DONATION_WALLET = 'ManGofryUWC5VWk7t4ATP32qJtGVBBNoVi2AQ9HyR9J'
 
 const TOOL_URLS = {
@@ -153,6 +166,139 @@ const resources: Resource[] = [
   { name: 'Solscan', url: 'https://solscan.io/' },
   { name: 'ORB', url: 'https://orb.helius.dev/' },
 ]
+
+const communityCards: CommunityCard[] = [
+  {
+    title: 'CBS Community',
+    description:
+      'The main community for CBS Coin and the CBS tools ecosystem.',
+    links: [
+      {
+        label: 'X',
+        value: '@CBS_Coin',
+        url: 'https://x.com/CBS_Coin',
+        icon: 'x',
+      },
+      {
+        label: 'Telegram',
+        value: '@CBS_Coin',
+        url: 'https://t.me/CBS_Coin',
+        icon: 'telegram',
+      },
+      {
+        label: 'Email',
+        value: 'contact@cbs-coin.com',
+        url: 'mailto:contact@cbs-coin.com',
+        icon: 'email',
+      },
+    ],
+  },
+  {
+    title: 'ManGo Community',
+    description:
+      'The first public project built with CBS tools and part of the growing ecosystem.',
+    links: [
+      {
+        label: 'X',
+        value: '@ManGomemefun',
+        url: 'https://x.com/ManGomemefun',
+        icon: 'x',
+      },
+      {
+        label: 'Telegram',
+        value: '@mangomeme',
+        url: 'https://t.me/mangomeme',
+        icon: 'telegram',
+      },
+      {
+        label: 'Website',
+        value: 'mangomeme.fun',
+        url: 'https://mangomeme.fun/',
+        icon: 'web',
+      },
+    ],
+  },
+]
+
+function renderCommunityLinkIcon(icon: CommunityLink['icon']): string {
+  if (icon === 'x') {
+    return `<span class="community-link-icon" aria-hidden="true">𝕏</span>`
+  }
+
+  if (icon === 'telegram') {
+    return `
+      <span class="community-link-icon community-link-icon--svg" aria-hidden="true">
+        <svg viewBox="0 0 24 24" focusable="false">
+          <path
+            d="M22 3L2 11.5l7 2.5L16 8l-5.5 8.5 2 7L22 3z"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </span>
+    `
+  }
+
+  if (icon === 'web') {
+    return `<span class="community-link-icon" aria-hidden="true">↗</span>`
+  }
+
+  return `<span class="community-link-icon" aria-hidden="true">@</span>`
+}
+
+function renderCommunityLink(link: CommunityLink): string {
+  const target =
+    link.url.startsWith('mailto:') ? '' : 'target="_blank" rel="noopener noreferrer"'
+
+  return `
+    <a
+      class="community-link"
+      href="${link.url}"
+      ${target}
+      aria-label="${link.label}: ${link.value}"
+    >
+      ${renderCommunityLinkIcon(link.icon)}
+      <span class="community-link-content">
+        <span class="community-link-label">${link.label}</span>
+        <span class="community-link-value">${link.value}</span>
+      </span>
+      <span class="community-link-arrow" aria-hidden="true">↗</span>
+    </a>
+  `
+}
+
+function renderCommunityCard(card: CommunityCard): string {
+  const links = card.links.map((link) => renderCommunityLink(link)).join('')
+
+  return `
+    <article class="community-card">
+      <h3 class="community-card-title">${card.title}</h3>
+      <p class="community-card-description">${card.description}</p>
+      <div class="community-links">
+        ${links}
+      </div>
+    </article>
+  `
+}
+
+function renderCommunitySection(): string {
+  return `
+    <section
+      class="page-section community-section"
+      aria-labelledby="community-heading"
+    >
+      <h2 class="section-title" id="community-heading">Community</h2>
+      <p class="section-subtitle">
+        Follow the projects and communities built around the CBS ecosystem.
+      </p>
+      <div class="community-grid">
+        ${communityCards.map((card) => renderCommunityCard(card)).join('')}
+      </div>
+    </section>
+  `
+}
 
 function setSiteFavicon(): void {
   let link = document.querySelector<HTMLLinkElement>('link[rel="icon"]')
@@ -531,6 +677,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 
     ${renderToolchainSection()}
     ${renderShowcaseSection()}
+    ${renderCommunitySection()}
 
     <section
       class="page-section"
