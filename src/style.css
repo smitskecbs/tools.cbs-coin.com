@@ -96,12 +96,15 @@ body {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: 0 0 18px;
+  padding: 0 0 16px;
   border: 1px solid rgba(216, 111, 0, 0.16);
   border-radius: 24px;
   background: #ffffff;
   box-shadow: 0 10px 32px rgba(216, 111, 0, 0.08);
   overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
   transition:
     transform 140ms ease,
     box-shadow 140ms ease,
@@ -110,8 +113,17 @@ body {
 
 .toolchain-card:hover {
   transform: translateY(-2px);
-  border-color: rgba(216, 111, 0, 0.28);
+  border-color: rgba(216, 111, 0, 0.32);
   box-shadow: 0 16px 40px rgba(216, 111, 0, 0.12);
+}
+
+.toolchain-card:focus-visible {
+  outline: 2px solid #d86f00;
+  outline-offset: 3px;
+}
+
+.toolchain-card:active {
+  transform: translateY(0);
 }
 
 .toolchain-logo-stage {
@@ -144,7 +156,8 @@ body {
 }
 
 .toolchain-card-content {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 10px;
   flex: 1;
   padding: 0 16px;
@@ -189,12 +202,14 @@ body {
   color: #d86f00;
 }
 
-.toolchain-card-btn {
-  width: calc(100% - 32px);
-  margin: 0 16px;
-  padding: 12px 16px;
-  font-size: 13px;
-  text-align: center;
+.toolchain-card-action {
+  align-self: flex-end;
+  margin-top: auto;
+  padding-top: 6px;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.4;
+  color: #d86f00;
 }
 
 .workflow-panel,

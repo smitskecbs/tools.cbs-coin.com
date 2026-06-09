@@ -11,7 +11,6 @@ type ToolchainCard = {
   headline: string
   description: string
   keyPoints: string[]
-  buttonLabel: string
   url: string
   logoUrl: string
 }
@@ -58,7 +57,6 @@ const toolchainCards: ToolchainCard[] = [
       'Compatible with Phantom, Solflare and Backpack',
       'Vanity wallet support',
     ],
-    buttonLabel: 'Open Wallet Generator',
     url: TOOL_URLS.wallet,
     logoUrl: walletGeneratorLogo,
   },
@@ -72,7 +70,6 @@ const toolchainCards: ToolchainCard[] = [
       'Authority controls',
       'Vanity mint creation',
     ],
-    buttonLabel: 'Open Token Builder',
     url: TOOL_URLS.tokenBuilder,
     logoUrl: tokenBuilderLogo,
   },
@@ -86,7 +83,6 @@ const toolchainCards: ToolchainCard[] = [
       'Verification system',
       'Community updates',
     ],
-    buttonLabel: 'Open Token Launcher',
     url: TOOL_URLS.tokenLauncher,
     logoUrl: tokenLauncherLogo,
   },
@@ -179,7 +175,13 @@ function renderToolchainCard(card: ToolchainCard): string {
     .join('')
 
   return `
-    <article class="toolchain-card">
+    <a
+      class="toolchain-card"
+      href="${card.url}"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="${card.toolName}"
+    >
       <div class="toolchain-logo-stage">
         <img
           class="toolchain-logo"
@@ -195,16 +197,9 @@ function renderToolchainCard(card: ToolchainCard): string {
         <ul class="toolchain-points" aria-label="${card.headline} highlights">
           ${points}
         </ul>
+        <span class="toolchain-card-action">Open tool ↗</span>
       </div>
-      <a
-        class="primary-btn toolchain-card-btn"
-        href="${card.url}"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        ${card.buttonLabel}
-      </a>
-    </article>
+    </a>
   `
 }
 
