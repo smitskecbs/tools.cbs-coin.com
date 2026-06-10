@@ -11,19 +11,6 @@
   box-sizing: border-box;
 }
 
-html,
-body {
-  width: 100%;
-  max-width: 100%;
-  overflow-x: hidden;
-}
-
-#app {
-  width: 100%;
-  max-width: 100%;
-  min-width: 0;
-}
-
 body {
   margin: 0;
   min-height: 100vh;
@@ -39,9 +26,6 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 16px;
-  width: 100%;
-  max-width: 100%;
-  min-width: 0;
   padding: 16px 20px 40px;
 }
 
@@ -49,7 +33,6 @@ body {
 .page-section {
   width: 100%;
   max-width: 720px;
-  min-width: 0;
 }
 
 .site-hero {
@@ -100,9 +83,6 @@ body {
 
 .toolchain-section {
   gap: 18px;
-  width: 100%;
-  max-width: 100%;
-  min-width: 0;
 }
 
 .toolchain-grid {
@@ -110,18 +90,12 @@ body {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 14px;
   align-items: stretch;
-  width: 100%;
-  max-width: 100%;
-  min-width: 0;
 }
 
 .toolchain-card {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  width: 100%;
-  max-width: 100%;
-  min-width: 0;
   padding: 0 0 16px;
   border: 1px solid rgba(216, 111, 0, 0.16);
   border-radius: 24px;
@@ -156,9 +130,6 @@ body {
   display: grid;
   gap: 10px;
   justify-items: center;
-  width: 100%;
-  max-width: 100%;
-  min-width: 0;
   padding: 22px 16px 18px;
   background:
     radial-gradient(circle at 50% 0%, rgba(255, 179, 71, 0.18), transparent 62%),
@@ -169,8 +140,7 @@ body {
 .toolchain-logo {
   display: block;
   width: auto;
-  max-width: 100%;
-  height: auto;
+  max-width: 92%;
   max-height: 96px;
   object-fit: contain;
   filter: drop-shadow(0 10px 18px rgba(216, 111, 0, 0.12));
@@ -178,15 +148,10 @@ body {
 
 .toolchain-tool-name {
   margin: 0;
-  width: 100%;
-  max-width: 100%;
-  min-width: 0;
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  text-align: center;
-  overflow-wrap: anywhere;
   color: #b85a00;
 }
 
@@ -195,9 +160,6 @@ body {
   flex-direction: column;
   gap: 10px;
   flex: 1;
-  width: 100%;
-  max-width: 100%;
-  min-width: 0;
   padding: 0 16px;
 }
 
@@ -206,7 +168,6 @@ body {
   font-size: clamp(17px, 2.8vw, 19px);
   line-height: 1.25;
   color: #111111;
-  overflow-wrap: anywhere;
 }
 
 .toolchain-description {
@@ -214,7 +175,6 @@ body {
   font-size: 13px;
   line-height: 1.5;
   color: #666666;
-  overflow-wrap: anywhere;
 }
 
 .toolchain-points {
@@ -223,9 +183,6 @@ body {
   margin: 2px 0 0;
   padding: 0;
   list-style: none;
-  width: 100%;
-  max-width: 100%;
-  min-width: 0;
 }
 
 .toolchain-point {
@@ -234,11 +191,10 @@ body {
   font-size: 12px;
   line-height: 1.45;
   color: #444444;
-  overflow-wrap: anywhere;
 }
 
 .toolchain-point::before {
-  content: '✓';
+  content: '?';
   position: absolute;
   left: 0;
   top: 0;
@@ -463,6 +419,13 @@ body {
   height: 22px;
   max-width: 100%;
   object-fit: contain;
+}
+
+.liquidity-provider-name {
+  display: none;
+  font-size: 15px;
+  font-weight: 800;
+  color: #d86f00;
 }
 
 .showcase-card {
@@ -693,154 +656,144 @@ body {
   box-shadow: 0 2px 8px rgba(216, 111, 0, 0.14);
 }
 
+.mobile-only {
+  display: none;
+}
+
+.mobile-section {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 24px;
+}
+
+.mobile-section-title {
+  margin: 0 0 8px;
+  font-size: 20px;
+  font-weight: 800;
+  color: #d86f00;
+}
+
+.mobile-section-intro,
+.mobile-section-note {
+  margin: 0 0 12px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #666666;
+}
+
+.mobile-tool-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 100%;
+}
+
+.mobile-tool-card {
+  width: 100%;
+  max-width: 100%;
+  padding: 16px;
+  border: 1px solid rgba(216, 111, 0, 0.16);
+  border-radius: 16px;
+  background: #ffffff;
+}
+
+.mobile-tool-logo {
+  display: block;
+  width: 64px;
+  max-width: 100%;
+  height: auto;
+  margin: 0 0 10px;
+}
+
+.mobile-tool-title {
+  margin: 0 0 8px;
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.3;
+  color: #111111;
+}
+
+.mobile-tool-description {
+  margin: 0 0 12px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #555555;
+}
+
+.mobile-tool-btn {
+  display: inline-block;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #ffb347, #d86f00);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.mobile-flow-list,
+.mobile-link-list {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+  list-style: none;
+}
+
+.mobile-flow-list {
+  counter-reset: flow-step;
+}
+
+.mobile-flow-list li {
+  margin: 0 0 10px;
+  padding: 12px 14px;
+  border: 1px solid rgba(216, 111, 0, 0.12);
+  border-radius: 12px;
+  background: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: #333333;
+}
+
+.mobile-link-list li {
+  margin: 0 0 8px;
+}
+
+.mobile-link-list a {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: #d86f00;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 @media (max-width: 768px) {
+  .desktop-only {
+    display: none;
+  }
+
+  .mobile-only {
+    display: block;
+  }
+
   .app-shell {
     padding-left: 16px;
     padding-right: 16px;
   }
 
-  .toolchain-section {
+  .site-hero,
+  .page-section,
+  .site-footer,
+  .mobile-only {
     width: 100%;
     max-width: 100%;
-    overflow: hidden;
-    padding-left: 0;
-    padding-right: 0;
-    box-sizing: border-box;
   }
 
-  .toolchain-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    width: 100%;
+  .site-banner {
     max-width: 100%;
-    overflow: visible;
-    transform: none;
-    grid-template-columns: none;
-    align-items: stretch;
-  }
-
-  .toolchain-card {
-    display: block;
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-    box-sizing: border-box;
-    padding: 20px;
-    margin: 0;
-    overflow: hidden;
-    transform: none;
-    gap: 0;
-  }
-
-  .toolchain-card:hover,
-  .toolchain-card:active {
-    transform: none;
-  }
-
-  .toolchain-card:focus-visible {
-    outline-offset: 0;
-  }
-
-  .toolchain-logo-stage {
-    display: block;
-    width: 100%;
-    max-width: 100%;
-    padding: 0;
-    margin: 0;
-    background: none;
-    border: 0;
-    overflow: visible;
-  }
-
-  .toolchain-logo {
-    display: block;
-    width: 100%;
-    max-width: 160px;
-    height: auto;
-    margin: 0 auto 12px;
-    object-fit: contain;
-    filter: none;
-    transform: none;
-    max-height: none;
-  }
-
-  .toolchain-tool-name {
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-    margin: 0 0 10px;
-    white-space: normal;
-    overflow-wrap: anywhere;
-    word-break: normal;
-  }
-
-  .toolchain-card-content {
-    display: block;
-    width: 100%;
-    max-width: 100%;
-    padding: 0;
-    margin: 0;
-    flex: none;
-    min-width: 0;
-  }
-
-  .toolchain-headline {
-    margin: 0 0 8px;
-    max-width: 100%;
-    white-space: normal;
-    overflow-wrap: anywhere;
-    word-break: normal;
-  }
-
-  .toolchain-description {
-    margin: 0 0 10px;
-    max-width: 100%;
-    white-space: normal;
-    overflow-wrap: anywhere;
-    word-break: normal;
-  }
-
-  .toolchain-points {
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-    margin: 0 0 12px;
-    padding: 0;
-  }
-
-  .toolchain-point {
-    position: static;
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-    padding-left: 0;
-    max-width: 100%;
-    white-space: normal;
-    overflow-wrap: anywhere;
-    word-break: normal;
-  }
-
-  .toolchain-point::before {
-    position: static;
-    flex-shrink: 0;
-  }
-
-  .toolchain-card-action {
-    display: inline-block;
-    margin: 0;
-    padding: 0;
-    max-width: 100%;
-    white-space: normal;
-    overflow-wrap: anywhere;
-    word-break: normal;
-    align-self: auto;
-  }
-}
-
-@media (max-width: 720px) {
-  .community-grid {
-    grid-template-columns: 1fr;
   }
 
   .showcase-card {
@@ -851,34 +804,22 @@ body {
 
   .showcase-actions {
     justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .mango-donation-wallet,
+  .mango-donation-copy-btn {
+    max-width: 100%;
   }
 }
 
-@media (max-width: 640px) {
-  .workflow-panel-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 4px;
+@media (min-width: 769px) {
+  .desktop-only {
+    display: block;
   }
 
-  .workflow-panel-hint {
-    text-align: left;
-  }
-
-  .workflow-timeline {
-    padding-bottom: 4px;
-  }
-
-  .workflow-step {
-    min-width: 132px;
-  }
-
-  .liquidity-providers {
-    flex-direction: column;
-  }
-
-  .liquidity-provider {
-    width: 100%;
+  .mobile-only {
+    display: none;
   }
 }
 

@@ -101,6 +101,45 @@ const toolchainCards: ToolchainCard[] = [
   },
 ]
 
+type MobileToolCard = {
+  name: string
+  description: string
+  url: string
+  logoUrl: string
+}
+
+const mobileToolCards: MobileToolCard[] = [
+  {
+    name: 'Wallet Generator',
+    description:
+      'Generate a standard or vanity Solana wallet locally in your browser. Private keys stay on your device.',
+    url: TOOL_URLS.wallet,
+    logoUrl: walletGeneratorLogo,
+  },
+  {
+    name: 'Token Builder',
+    description:
+      'Create a token with metadata, supply controls and custom settings. Built for Solana builders who want full control.',
+    url: TOOL_URLS.tokenBuilder,
+    logoUrl: tokenBuilderLogo,
+  },
+  {
+    name: 'Token Launcher',
+    description:
+      'Create a project page, collect interest and grow your community. Publish updates and make your project discoverable.',
+    url: TOOL_URLS.tokenLauncher,
+    logoUrl: tokenLauncherLogo,
+  },
+]
+
+const mobileFlowSteps = [
+  'Create wallet',
+  'Create token',
+  'Create liquidity',
+  'Submit project',
+  'Grow community',
+]
+
 const workflowSteps: WorkflowStep[] = [
   {
     id: 'wallet',
@@ -285,18 +324,20 @@ function renderCommunityCard(card: CommunityCard): string {
 
 function renderCommunitySection(): string {
   return `
-    <section
-      class="page-section community-section"
-      aria-labelledby="community-heading"
-    >
-      <h2 class="section-title" id="community-heading">Community</h2>
-      <p class="section-subtitle">
-        Follow the projects and communities built around the CBS ecosystem.
-      </p>
-      <div class="community-grid">
-        ${communityCards.map((card) => renderCommunityCard(card)).join('')}
-      </div>
-    </section>
+    <div class="desktop-only">
+      <section
+        class="page-section community-section"
+        aria-labelledby="community-heading"
+      >
+        <h2 class="section-title" id="community-heading">Community</h2>
+        <p class="section-subtitle">
+          Follow the projects and communities built around the CBS ecosystem.
+        </p>
+        <div class="community-grid">
+          ${communityCards.map((card) => renderCommunityCard(card)).join('')}
+        </div>
+      </section>
+    </div>
   `
 }
 
@@ -314,6 +355,85 @@ function setSiteFavicon(): void {
 }
 
 setSiteFavicon()
+
+function renderMobileToolCard(card: MobileToolCard): string {
+  return `
+    <article class="mobile-tool-card">
+      <img
+        class="mobile-tool-logo"
+        src="${card.logoUrl}"
+        alt=""
+        loading="lazy"
+      />
+      <h3 class="mobile-tool-title">${card.name}</h3>
+      <p class="mobile-tool-description">${card.description}</p>
+      <a
+        class="mobile-tool-btn"
+        href="${card.url}"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Open Tool
+      </a>
+    </article>
+  `
+}
+
+function renderMobileLayout(): string {
+  const liquidityLinks = liquidityProviders
+    .map(
+      (provider) => `
+        <li>
+          <a
+            href="${provider.url}"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            ${provider.name}
+          </a>
+        </li>
+      `,
+    )
+    .join('')
+
+  const flowItems = mobileFlowSteps
+    .map((step) => `<li>${step}</li>`)
+    .join('')
+
+  return `
+    <div class="mobile-only">
+      <section class="mobile-section" aria-labelledby="mobile-tools-heading">
+        <h2 class="mobile-section-title" id="mobile-tools-heading">CBS Toolchain</h2>
+        <p class="mobile-section-intro">
+          Everything you need to go from a new wallet to a public Solana project.
+        </p>
+        <div class="mobile-tool-list">
+          ${mobileToolCards.map((card) => renderMobileToolCard(card)).join('')}
+        </div>
+      </section>
+
+      <section class="mobile-section" aria-labelledby="mobile-flow-heading">
+        <h2 class="mobile-section-title" id="mobile-flow-heading">Project Flow</h2>
+        <ol class="mobile-flow-list">
+          ${flowItems}
+        </ol>
+      </section>
+
+      <section class="mobile-section" aria-labelledby="mobile-liquidity-heading">
+        <h2 class="mobile-section-title" id="mobile-liquidity-heading">Liquidity</h2>
+        <p class="mobile-section-intro">
+          Liquidity can be created through trusted Solana liquidity platforms.
+        </p>
+        <ul class="mobile-link-list">
+          ${liquidityLinks}
+        </ul>
+        <p class="mobile-section-note">
+          Always understand liquidity risks before providing liquidity.
+        </p>
+      </section>
+    </div>
+  `
+}
 
 function renderToolchainCard(card: ToolchainCard): string {
   const points = card.keyPoints
@@ -453,6 +573,7 @@ function renderLiquiditySection(): string {
             alt=""
             loading="lazy"
           />
+          <span class="liquidity-provider-name">${provider.name}</span>
         </a>
       `,
     )
@@ -475,22 +596,24 @@ function renderLiquiditySection(): string {
 
 function renderToolchainSection(): string {
   return `
-    <section
-      class="page-section toolchain-section"
-      aria-labelledby="toolchain-heading"
-    >
-      <h2 class="section-title" id="toolchain-heading">CBS Toolchain</h2>
-      <p class="section-subtitle">
-        Everything you need to go from a new wallet to a public Solana project.
-      </p>
+    <div class="desktop-only">
+      <section
+        class="page-section toolchain-section"
+        aria-labelledby="toolchain-heading"
+      >
+        <h2 class="section-title" id="toolchain-heading">CBS Toolchain</h2>
+        <p class="section-subtitle">
+          Everything you need to go from a new wallet to a public Solana project.
+        </p>
 
-      <div class="toolchain-grid">
-        ${toolchainCards.map((card) => renderToolchainCard(card)).join('')}
-      </div>
+        <div class="toolchain-grid">
+          ${toolchainCards.map((card) => renderToolchainCard(card)).join('')}
+        </div>
 
-      ${renderWorkflowTimeline()}
-      ${renderLiquiditySection()}
-    </section>
+        ${renderWorkflowTimeline()}
+        ${renderLiquiditySection()}
+      </section>
+    </div>
   `
 }
 
@@ -676,16 +799,19 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     </header>
 
     ${renderToolchainSection()}
+    ${renderMobileLayout()}
     ${renderShowcaseSection()}
     ${renderCommunitySection()}
 
-    <section
-      class="page-section"
-      aria-labelledby="resources-heading"
-    >
-      <h2 class="section-title" id="resources-heading">Trusted Resources</h2>
-      ${renderResourcesMarquee()}
-    </section>
+    <div class="desktop-only">
+      <section
+        class="page-section"
+        aria-labelledby="resources-heading"
+      >
+        <h2 class="section-title" id="resources-heading">Trusted Resources</h2>
+        ${renderResourcesMarquee()}
+      </section>
+    </div>
 
     ${renderDonationSection()}
 
