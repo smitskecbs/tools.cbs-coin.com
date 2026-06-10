@@ -160,6 +160,7 @@ body {
   flex-direction: column;
   gap: 10px;
   flex: 1;
+  min-width: 0;
   padding: 0 16px;
 }
 
@@ -649,17 +650,47 @@ body {
   box-shadow: 0 2px 8px rgba(216, 111, 0, 0.14);
 }
 
-@media (max-width: 720px) {
+@media (max-width: 768px) {
   .toolchain-grid {
     grid-template-columns: 1fr;
+    align-items: start;
   }
 
-  .community-grid {
-    grid-template-columns: 1fr;
+  .toolchain-card {
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+  }
+
+  .toolchain-logo-stage {
+    padding: 16px 14px 12px;
   }
 
   .toolchain-logo {
-    max-height: 88px;
+    max-height: 72px;
+  }
+
+  .toolchain-card-content {
+    flex: none;
+    gap: 8px;
+  }
+
+  .toolchain-headline,
+  .toolchain-description,
+  .toolchain-points {
+    flex-shrink: 0;
+  }
+
+  .toolchain-card-action {
+    margin-top: 0;
+    align-self: flex-start;
+    padding-top: 4px;
+  }
+}
+
+@media (max-width: 720px) {
+  .community-grid {
+    grid-template-columns: 1fr;
   }
 
   .showcase-card {
