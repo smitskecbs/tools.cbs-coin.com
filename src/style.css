@@ -11,6 +11,19 @@
   box-sizing: border-box;
 }
 
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+#app {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
 body {
   margin: 0;
   min-height: 100vh;
@@ -26,6 +39,9 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 16px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   padding: 16px 20px 40px;
 }
 
@@ -33,6 +49,7 @@ body {
 .page-section {
   width: 100%;
   max-width: 720px;
+  min-width: 0;
 }
 
 .site-hero {
@@ -83,6 +100,9 @@ body {
 
 .toolchain-section {
   gap: 18px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .toolchain-grid {
@@ -90,12 +110,18 @@ body {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 14px;
   align-items: stretch;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .toolchain-card {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   padding: 0 0 16px;
   border: 1px solid rgba(216, 111, 0, 0.16);
   border-radius: 24px;
@@ -130,6 +156,9 @@ body {
   display: grid;
   gap: 10px;
   justify-items: center;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   padding: 22px 16px 18px;
   background:
     radial-gradient(circle at 50% 0%, rgba(255, 179, 71, 0.18), transparent 62%),
@@ -140,7 +169,8 @@ body {
 .toolchain-logo {
   display: block;
   width: auto;
-  max-width: 92%;
+  max-width: 100%;
+  height: auto;
   max-height: 96px;
   object-fit: contain;
   filter: drop-shadow(0 10px 18px rgba(216, 111, 0, 0.12));
@@ -148,10 +178,15 @@ body {
 
 .toolchain-tool-name {
   margin: 0;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+  text-align: center;
+  overflow-wrap: anywhere;
   color: #b85a00;
 }
 
@@ -160,6 +195,8 @@ body {
   flex-direction: column;
   gap: 10px;
   flex: 1;
+  width: 100%;
+  max-width: 100%;
   min-width: 0;
   padding: 0 16px;
 }
@@ -169,6 +206,7 @@ body {
   font-size: clamp(17px, 2.8vw, 19px);
   line-height: 1.25;
   color: #111111;
+  overflow-wrap: anywhere;
 }
 
 .toolchain-description {
@@ -176,6 +214,7 @@ body {
   font-size: 13px;
   line-height: 1.5;
   color: #666666;
+  overflow-wrap: anywhere;
 }
 
 .toolchain-points {
@@ -184,6 +223,9 @@ body {
   margin: 2px 0 0;
   padding: 0;
   list-style: none;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .toolchain-point {
@@ -192,6 +234,7 @@ body {
   font-size: 12px;
   line-height: 1.45;
   color: #444444;
+  overflow-wrap: anywhere;
 }
 
 .toolchain-point::before {
@@ -651,40 +694,73 @@ body {
 }
 
 @media (max-width: 768px) {
+  .app-shell {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .toolchain-section {
+    overflow-x: clip;
+  }
+
   .toolchain-grid {
     grid-template-columns: 1fr;
     align-items: start;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
   }
 
   .toolchain-card {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
     height: auto;
     min-height: 0;
-    overflow: visible;
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(216, 111, 0, 0.07);
+  }
+
+  .toolchain-card:hover {
+    transform: none;
+    box-shadow: 0 4px 14px rgba(216, 111, 0, 0.07);
+  }
+
+  .toolchain-card:focus-visible {
+    outline-offset: 0;
   }
 
   .toolchain-logo-stage {
-    padding: 16px 14px 12px;
+    padding: 16px 12px 12px;
+    overflow: hidden;
   }
 
   .toolchain-logo {
+    width: auto;
+    max-width: 100%;
+    height: auto;
     max-height: 72px;
+    filter: none;
   }
 
   .toolchain-card-content {
     flex: none;
     gap: 8px;
+    padding: 0 12px;
   }
 
   .toolchain-headline,
   .toolchain-description,
   .toolchain-points {
     flex-shrink: 0;
+    max-width: 100%;
   }
 
   .toolchain-card-action {
     margin-top: 0;
     align-self: flex-start;
     padding-top: 4px;
+    max-width: 100%;
   }
 }
 
