@@ -700,30 +700,42 @@ body {
   }
 
   .toolchain-section {
-    overflow-x: clip;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    padding-left: 0;
+    padding-right: 0;
+    box-sizing: border-box;
   }
 
   .toolchain-grid {
-    grid-template-columns: 1fr;
-    align-items: start;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
     width: 100%;
     max-width: 100%;
-    min-width: 0;
+    overflow: visible;
+    transform: none;
+    grid-template-columns: none;
+    align-items: stretch;
   }
 
   .toolchain-card {
+    display: block;
     width: 100%;
     max-width: 100%;
     min-width: 0;
-    height: auto;
-    min-height: 0;
+    box-sizing: border-box;
+    padding: 20px;
+    margin: 0;
     overflow: hidden;
-    box-shadow: 0 4px 14px rgba(216, 111, 0, 0.07);
+    transform: none;
+    gap: 0;
   }
 
-  .toolchain-card:hover {
+  .toolchain-card:hover,
+  .toolchain-card:active {
     transform: none;
-    box-shadow: 0 4px 14px rgba(216, 111, 0, 0.07);
   }
 
   .toolchain-card:focus-visible {
@@ -731,36 +743,98 @@ body {
   }
 
   .toolchain-logo-stage {
-    padding: 16px 12px 12px;
-    overflow: hidden;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
+    background: none;
+    border: 0;
+    overflow: visible;
   }
 
   .toolchain-logo {
-    width: auto;
-    max-width: 100%;
+    display: block;
+    width: 100%;
+    max-width: 160px;
     height: auto;
-    max-height: 72px;
+    margin: 0 auto 12px;
+    object-fit: contain;
     filter: none;
+    transform: none;
+    max-height: none;
+  }
+
+  .toolchain-tool-name {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin: 0 0 10px;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: normal;
   }
 
   .toolchain-card-content {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
     flex: none;
-    gap: 8px;
-    padding: 0 12px;
+    min-width: 0;
   }
 
-  .toolchain-headline,
-  .toolchain-description,
-  .toolchain-points {
-    flex-shrink: 0;
+  .toolchain-headline {
+    margin: 0 0 8px;
     max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+
+  .toolchain-description {
+    margin: 0 0 10px;
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+
+  .toolchain-points {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin: 0 0 12px;
+    padding: 0;
+  }
+
+  .toolchain-point {
+    position: static;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding-left: 0;
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+
+  .toolchain-point::before {
+    position: static;
+    flex-shrink: 0;
   }
 
   .toolchain-card-action {
-    margin-top: 0;
-    align-self: flex-start;
-    padding-top: 4px;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
     max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: normal;
+    align-self: auto;
   }
 }
 
