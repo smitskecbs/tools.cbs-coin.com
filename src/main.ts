@@ -10,6 +10,7 @@ type ToolchainCard = {
   toolName: string
   headline: string
   description: string
+  whyItMatters: string
   keyPoints: string[]
   url: string
   logoUrl: string
@@ -65,6 +66,8 @@ const toolchainCards: ToolchainCard[] = [
     headline: 'Create a Solana Wallet',
     description:
       'Generate a standard or vanity Solana wallet locally in your browser.',
+    whyItMatters:
+      'Your wallet is your identity on Solana. You need a wallet before you can create tokens, hold assets or interact with blockchain applications.',
     keyPoints: [
       'Private keys stay on your device',
       'Compatible with Phantom, Solflare and Backpack',
@@ -78,6 +81,8 @@ const toolchainCards: ToolchainCard[] = [
     headline: 'Create a Solana Token',
     description:
       'Create a token with metadata, supply controls and custom settings.',
+    whyItMatters:
+      'A token is the foundation of your project. This is where you define your supply, branding and token settings.',
     keyPoints: [
       'Metadata support',
       'Authority controls',
@@ -91,6 +96,8 @@ const toolchainCards: ToolchainCard[] = [
     headline: 'Launch Your Project',
     description:
       'Create a project page, collect interest and grow your community.',
+    whyItMatters:
+      'Creating a token is only the beginning. Projects grow through visibility, updates and community building.',
     keyPoints: [
       'Project listings',
       'Verification system',
@@ -104,15 +111,28 @@ const toolchainCards: ToolchainCard[] = [
 type MobileToolCard = {
   name: string
   description: string
+  whyItMatters: string
   url: string
   logoUrl: string
 }
+
+const LIQUIDITY_WHY_IT_MATTERS =
+  'Without liquidity, people cannot easily buy or sell your token. Liquidity connects your token to the market.'
+
+const COMMUNITY_BENEFITS = [
+  'Share updates',
+  'Provide feedback',
+  'Find bugs',
+  'Support adoption',
+  'Help a project grow',
+]
 
 const mobileToolCards: MobileToolCard[] = [
   {
     name: 'Wallet Generator',
     description:
       'Generate a standard or vanity Solana wallet locally in your browser. Private keys stay on your device.',
+    whyItMatters: toolchainCards[0].whyItMatters,
     url: TOOL_URLS.wallet,
     logoUrl: walletGeneratorLogo,
   },
@@ -120,6 +140,7 @@ const mobileToolCards: MobileToolCard[] = [
     name: 'Token Builder',
     description:
       'Create a token with metadata, supply controls and custom settings. Built for Solana builders who want full control.',
+    whyItMatters: toolchainCards[1].whyItMatters,
     url: TOOL_URLS.tokenBuilder,
     logoUrl: tokenBuilderLogo,
   },
@@ -127,6 +148,7 @@ const mobileToolCards: MobileToolCard[] = [
     name: 'Token Launcher',
     description:
       'Create a project page, collect interest and grow your community. Publish updates and make your project discoverable.',
+    whyItMatters: toolchainCards[2].whyItMatters,
     url: TOOL_URLS.tokenLauncher,
     logoUrl: tokenLauncherLogo,
   },
@@ -259,6 +281,71 @@ const communityCards: CommunityCard[] = [
   },
 ]
 
+function renderWhyBlock(text: string): string {
+  return `
+    <div class="edu-block">
+      <h4 class="edu-block-title">Why it matters</h4>
+      <p class="edu-block-text">${text}</p>
+    </div>
+  `
+}
+
+function renderCommunityWhyBlock(): string {
+  const benefits = COMMUNITY_BENEFITS.map((item) => `<li>${item}</li>`).join('')
+
+  return `
+    <div class="edu-block edu-block--community">
+      <h3 class="edu-block-heading">Why Community Matters</h3>
+      <p class="edu-block-text">
+        Strong communities often outperform strong technology.
+      </p>
+      <p class="edu-block-text">
+        People support projects they understand, trust and enjoy being part of.
+      </p>
+      <p class="edu-block-label">A community can:</p>
+      <ul class="edu-block-list">
+        ${benefits}
+      </ul>
+    </div>
+  `
+}
+
+function renderLiquidityEducation(): string {
+  const platforms = liquidityProviders
+    .map((provider) => `<li>${provider.name}</li>`)
+    .join('')
+
+  return `
+    ${renderWhyBlock(LIQUIDITY_WHY_IT_MATTERS)}
+    <div class="edu-block edu-block--platforms">
+      <p class="edu-block-text">
+        Liquidity can be created through trusted platforms such as:
+      </p>
+      <ul class="edu-block-list edu-block-list--inline">
+        ${platforms}
+      </ul>
+    </div>
+  `
+}
+
+function renderJourneySummary(): string {
+  return `
+    <section
+      class="page-section journey-section"
+      aria-labelledby="journey-heading"
+    >
+      <div class="journey-card">
+        <h2 class="journey-title" id="journey-heading">The Journey</h2>
+        <p class="journey-path">Wallet → Token → Liquidity → Community</p>
+        <p class="journey-text">Each step builds on the previous one.</p>
+        <p class="journey-text">
+          The goal is not simply to launch a token. The goal is to build something people want to use.
+        </p>
+      </div>
+    </section>
+  `
+}
+
 function renderCommunityLinkIcon(icon: CommunityLink['icon']): string {
   if (icon === 'x') {
     return `<span class="community-link-icon" aria-hidden="true">𝕏</span>`
@@ -333,6 +420,7 @@ function renderCommunitySection(): string {
         <p class="section-subtitle">
           Follow the projects and communities built around the CBS ecosystem.
         </p>
+        ${renderCommunityWhyBlock()}
         <div class="community-grid">
           ${communityCards.map((card) => renderCommunityCard(card)).join('')}
         </div>
@@ -367,6 +455,7 @@ function renderMobileToolCard(card: MobileToolCard): string {
       />
       <h3 class="mobile-tool-title">${card.name}</h3>
       <p class="mobile-tool-description">${card.description}</p>
+      ${renderWhyBlock(card.whyItMatters)}
       <a
         class="mobile-tool-btn"
         href="${card.url}"
@@ -421,15 +510,18 @@ function renderMobileLayout(): string {
 
       <section class="mobile-section" aria-labelledby="mobile-liquidity-heading">
         <h2 class="mobile-section-title" id="mobile-liquidity-heading">Liquidity</h2>
-        <p class="mobile-section-intro">
-          Liquidity can be created through trusted Solana liquidity platforms.
-        </p>
+        ${renderLiquidityEducation()}
         <ul class="mobile-link-list">
           ${liquidityLinks}
         </ul>
         <p class="mobile-section-note">
           Always understand liquidity risks before providing liquidity.
         </p>
+      </section>
+
+      <section class="mobile-section" aria-labelledby="mobile-community-heading">
+        <h2 class="mobile-section-title" id="mobile-community-heading">Community</h2>
+        ${renderCommunityWhyBlock()}
       </section>
     </div>
   `
@@ -460,6 +552,7 @@ function renderToolchainCard(card: ToolchainCard): string {
       <div class="toolchain-card-content">
         <h3 class="toolchain-headline">${card.headline}</h3>
         <p class="toolchain-description">${card.description}</p>
+        ${renderWhyBlock(card.whyItMatters)}
         <ul class="toolchain-points" aria-label="${card.headline} highlights">
           ${points}
         </ul>
@@ -581,9 +674,7 @@ function renderLiquiditySection(): string {
 
   return `
     <div class="liquidity-panel">
-      <p class="liquidity-panel-text">
-        Liquidity can be created through trusted Solana liquidity platforms.
-      </p>
+      ${renderLiquidityEducation()}
       <div class="liquidity-providers">
         ${providers}
       </div>
@@ -812,6 +903,8 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         ${renderResourcesMarquee()}
       </section>
     </div>
+
+    ${renderJourneySummary()}
 
     ${renderDonationSection()}
 

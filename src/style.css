@@ -212,6 +212,110 @@ body {
   color: #d86f00;
 }
 
+.edu-block {
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(216, 111, 0, 0.12);
+  background: rgba(255, 250, 245, 0.94);
+}
+
+.edu-block-title {
+  margin: 0 0 6px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #b85a00;
+}
+
+.edu-block-heading {
+  margin: 0 0 8px;
+  font-size: clamp(18px, 3.5vw, 20px);
+  font-weight: 800;
+  line-height: 1.25;
+  color: #d86f00;
+}
+
+.edu-block-label {
+  margin: 10px 0 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #444444;
+}
+
+.edu-block-text {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #555555;
+}
+
+.edu-block-text + .edu-block-text {
+  margin-top: 8px;
+}
+
+.edu-block-list {
+  margin: 8px 0 0;
+  padding-left: 18px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #444444;
+}
+
+.edu-block-list li + li {
+  margin-top: 4px;
+}
+
+.edu-block-list--inline {
+  list-style: disc;
+}
+
+.edu-block--community {
+  margin-bottom: 4px;
+}
+
+.journey-section {
+  gap: 0;
+}
+
+.journey-card {
+  width: 100%;
+  padding: 20px;
+  border: 1px solid rgba(216, 111, 0, 0.16);
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at 0% 0%, rgba(255, 179, 71, 0.1), transparent 52%),
+    #ffffff;
+  box-shadow: 0 8px 24px rgba(216, 111, 0, 0.06);
+  text-align: center;
+}
+
+.journey-title {
+  margin: 0 0 10px;
+  font-size: clamp(20px, 4vw, 24px);
+  font-weight: 800;
+  color: #d86f00;
+}
+
+.journey-path {
+  margin: 0 0 12px;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.4;
+  color: #333333;
+}
+
+.journey-text {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: #555555;
+}
+
+.journey-text + .journey-text {
+  margin-top: 8px;
+}
+
 .workflow-panel,
 .liquidity-panel {
   padding: 18px;
@@ -719,6 +823,10 @@ body {
   font-size: 14px;
   line-height: 1.5;
   color: #555555;
+}
+
+.mobile-tool-card .edu-block {
+  margin-bottom: 12px;
 }
 
 .mobile-tool-btn {
