@@ -4,34 +4,19 @@ import mangoLogo from './assets/mango-logo.png'
 import toolLogoUrl from './assets/tool-logo.png'
 import {
   attachToolsHub,
-  renderInteractiveToolsDesktop,
-  renderInteractiveToolsMobile,
+  renderInteractiveToolsHub,
   renderToolModal,
 } from './toolsHub'
-
-type WorkflowStep = {
-  id: string
-  name: string
-  description: string
-  detail: string
-}
-
-type LiquidityProvider = {
-  name: string
-  url: string
-  logoSrc: string
-}
-
-type Resource = {
-  name: string
-  url: string
-}
+import {
+  renderLiquidityProviderCards,
+  renderWalletLinksSection,
+} from './partnerLinksHub'
 
 type CommunityLink = {
   label: string
   value: string
   url: string
-  icon: 'x' | 'telegram' | 'web' | 'email'
+  icon: 'x' | 'telegram' | 'web' | 'email' | 'facebook'
 }
 
 type CommunityCard = {
@@ -58,80 +43,6 @@ const COMMUNITY_BENEFITS = [
   'Help a project grow',
 ]
 
-const mobileFlowSteps = [
-  'Create wallet',
-  'Create token',
-  'Create liquidity',
-  'Submit project',
-  'Grow community',
-]
-
-const workflowSteps: WorkflowStep[] = [
-  {
-    id: 'wallet',
-    name: 'Wallet',
-    description: 'Generate or import your Solana wallet',
-    detail:
-      'Create or import a Solana wallet. You can use the CBS Wallet Generator to create a local wallet or vanity address, then import it into Phantom, Solflare or Backpack.',
-  },
-  {
-    id: 'token',
-    name: 'Token',
-    description: 'Create your token with metadata and controls',
-    detail:
-      'Create your token with metadata, supply settings and authority controls using the CBS Token Builder.',
-  },
-  {
-    id: 'liquidity',
-    name: 'Liquidity',
-    description: 'Add trading liquidity on a DEX',
-    detail:
-      'Create a liquidity pool using trusted Solana platforms such as Raydium, Meteora or Orca. Always understand liquidity risks before adding funds.',
-  },
-  {
-    id: 'launch',
-    name: 'Launch',
-    description: 'Submit and promote your project',
-    detail:
-      'Submit your project to the CBS Token Launcher, add links, publish updates and make your project discoverable.',
-  },
-  {
-    id: 'community',
-    name: 'Community',
-    description: 'Share updates and grow interest',
-    detail:
-      'Share updates, collect interest, grow your holders and keep people informed as the project develops.',
-  },
-]
-
-const liquidityProviders: LiquidityProvider[] = [
-  {
-    name: 'Raydium',
-    url: 'https://raydium.io/',
-    logoSrc: '/assets/liquidity/raydium.svg',
-  },
-  {
-    name: 'Meteora',
-    url: 'https://meteora.ag/',
-    logoSrc: '/assets/liquidity/meteora.svg',
-  },
-  {
-    name: 'Orca',
-    url: 'https://www.orca.so/',
-    logoSrc: '/assets/liquidity/orca.svg',
-  },
-]
-
-const resources: Resource[] = [
-  { name: 'Phantom', url: 'https://phantom.app/' },
-  { name: 'Solflare', url: 'https://solflare.com/' },
-  { name: 'Jupiter', url: 'https://jup.ag/' },
-  { name: 'Raydium', url: 'https://raydium.io/' },
-  { name: 'Dexscreener', url: 'https://dexscreener.com/' },
-  { name: 'Solscan', url: 'https://solscan.io/' },
-  { name: 'ORB', url: 'https://orb.helius.dev/' },
-]
-
 const communityCards: CommunityCard[] = [
   {
     title: 'CBS Community',
@@ -149,6 +60,12 @@ const communityCards: CommunityCard[] = [
         value: '@CBS_Coin',
         url: 'https://t.me/CBS_Coin',
         icon: 'telegram',
+      },
+      {
+        label: 'Website',
+        value: 'cbs-coin.com',
+        url: 'https://cbs-coin.com',
+        icon: 'web',
       },
       {
         label: 'Email',
@@ -174,6 +91,18 @@ const communityCards: CommunityCard[] = [
         value: '@mangomeme',
         url: 'https://t.me/mangomeme',
         icon: 'telegram',
+      },
+      {
+        label: 'Facebook',
+        value: 'ManGomeme.fun',
+        url: 'https://facebook.com/ManGomeme.fun',
+        icon: 'facebook',
+      },
+      {
+        label: 'Email',
+        value: 'mangomemefun@gmail.com',
+        url: 'mailto:mangomemefun@gmail.com',
+        icon: 'email',
       },
       {
         label: 'Website',
@@ -215,38 +144,11 @@ function renderCommunityWhyBlock(): string {
 }
 
 function renderLiquidityEducation(): string {
-  const platforms = liquidityProviders
-    .map((provider) => `<li>${provider.name}</li>`)
-    .join('')
-
   return `
     ${renderWhyBlock(LIQUIDITY_WHY_IT_MATTERS)}
-    <div class="edu-block edu-block--platforms">
-      <p class="edu-block-text">
-        Liquidity can be created through trusted platforms such as:
-      </p>
-      <ul class="edu-block-list edu-block-list--inline">
-        ${platforms}
-      </ul>
-    </div>
-  `
-}
-
-function renderJourneySummary(): string {
-  return `
-    <section
-      class="page-section journey-section"
-      aria-labelledby="journey-heading"
-    >
-      <div class="journey-card">
-        <h2 class="journey-title" id="journey-heading">The Journey</h2>
-        <p class="journey-path">Wallet → Token → Liquidity → Community</p>
-        <p class="journey-text">Each step builds on the previous one.</p>
-        <p class="journey-text">
-          The goal is not simply to launch a token. The goal is to build something people want to use.
-        </p>
-      </div>
-    </section>
+    <p class="edu-block-text">
+      Liquidity can be created through trusted Solana DEX platforms. Review each provider carefully before adding funds.
+    </p>
   `
 }
 
@@ -271,11 +173,66 @@ function renderCommunityLinkIcon(icon: CommunityLink['icon']): string {
     `
   }
 
-  if (icon === 'web') {
-    return `<span class="community-link-icon" aria-hidden="true">↗</span>`
+  if (icon === 'facebook') {
+    return `
+      <span class="community-link-icon community-link-icon--svg" aria-hidden="true">
+        <svg viewBox="0 0 24 24" focusable="false">
+          <path
+            d="M24 12.073c0-6.627-5.373-12-12-12S0 5.446 0 12.073c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
+            fill="currentColor"
+          />
+        </svg>
+      </span>
+    `
   }
 
-  return `<span class="community-link-icon" aria-hidden="true">@</span>`
+  if (icon === 'web') {
+    return `
+      <span class="community-link-icon community-link-icon--svg" aria-hidden="true">
+        <svg viewBox="0 0 24 24" focusable="false">
+          <circle
+            cx="12"
+            cy="12"
+            r="9"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+          />
+          <path
+            d="M3 12h18M12 3c2.5 3 4 6.5 4 9s-1.5 6-4 9M12 3c-2.5 3-4 6.5-4 9s1.5 6 4 9"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+          />
+        </svg>
+      </span>
+    `
+  }
+
+  return `
+    <span class="community-link-icon community-link-icon--svg" aria-hidden="true">
+      <svg viewBox="0 0 24 24" focusable="false">
+        <rect
+          x="3"
+          y="5"
+          width="18"
+          height="14"
+          rx="2"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+        />
+        <path
+          d="M3 7l9 6 9-6"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </span>
+  `
 }
 
 function renderCommunityLink(link: CommunityLink): string {
@@ -348,50 +305,81 @@ function setSiteFavicon(): void {
 
 setSiteFavicon()
 
+function renderCommunityMessage(): string {
+  return `
+    <div class="community-message" aria-labelledby="community-message-heading">
+      <div class="community-message-panel">
+        <div class="community-message-heading-row">
+          <img
+            class="community-message-logo"
+            src="/assets/solana-logomark.svg"
+            alt=""
+            loading="lazy"
+            width="32"
+            height="25"
+          />
+          <h3 class="community-message-title" id="community-message-heading">
+            Built for the Solana Community
+            <svg
+              class="community-message-heart"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                fill="currentColor"
+              />
+            </svg>
+          </h3>
+        </div>
+        <div class="community-message-copy">
+          <p class="community-message-lead">
+            All CBS tools are <strong class="community-message-emphasis">free to use</strong>.
+          </p>
+          <div class="community-message-fees">
+            <p class="community-message-fees-label">You only pay:</p>
+            <ul class="community-message-fees-list">
+              <li><strong class="community-message-emphasis">Solana network fees</strong></li>
+              <li>Optional third-party service fees</li>
+            </ul>
+          </div>
+          <p class="community-message-note">
+            CBS does not charge platform fees.
+          </p>
+          <p class="community-message-footer">
+            Open Source • <strong class="community-message-emphasis">Community Driven</strong> • Built on Solana
+          </p>
+        </div>
+      </div>
+    </div>
+  `
+}
+
+function renderToolsEcosystemIntro(): string {
+  return `
+    <div class="tools-ecosystem-intro">
+      <h2 class="section-title" id="tools-heading">CBS Tools Ecosystem</h2>
+      <p class="section-subtitle">
+        Free tools for creating, launching and managing Solana projects.
+      </p>
+    </div>
+  `
+}
+
 function renderMobileLayout(): string {
-  const liquidityLinks = liquidityProviders
-    .map(
-      (provider) => `
-        <li>
-          <a
-            href="${provider.url}"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            ${provider.name}
-          </a>
-        </li>
-      `,
-    )
-    .join('')
-
-  const flowItems = mobileFlowSteps
-    .map((step) => `<li>${step}</li>`)
-    .join('')
-
   return `
     <div class="mobile-only">
-      <section class="mobile-section" aria-labelledby="mobile-tools-heading">
-        <h2 class="mobile-section-title" id="mobile-tools-heading">CBS Toolchain</h2>
-        <p class="mobile-section-intro">
-          Everything you need to go from a new wallet to a public Solana project.
-        </p>
-        ${renderInteractiveToolsMobile()}
-      </section>
-
-      <section class="mobile-section" aria-labelledby="mobile-flow-heading">
-        <h2 class="mobile-section-title" id="mobile-flow-heading">Project Flow</h2>
-        <ol class="mobile-flow-list">
-          ${flowItems}
-        </ol>
+      <section class="mobile-section" aria-labelledby="tools-heading">
+        ${renderCommunityMessage()}
+        ${renderWalletLinksSection()}
+        ${renderToolsEcosystemIntro()}
+        ${renderInteractiveToolsHub()}
       </section>
 
       <section class="mobile-section" aria-labelledby="mobile-liquidity-heading">
         <h2 class="mobile-section-title" id="mobile-liquidity-heading">Liquidity</h2>
         ${renderLiquidityEducation()}
-        <ul class="mobile-link-list">
-          ${liquidityLinks}
-        </ul>
+        ${renderLiquidityProviderCards()}
         <p class="mobile-section-note">
           Always understand liquidity risks before providing liquidity.
         </p>
@@ -400,127 +388,19 @@ function renderMobileLayout(): string {
       <section class="mobile-section" aria-labelledby="mobile-community-heading">
         <h2 class="mobile-section-title" id="mobile-community-heading">Community</h2>
         ${renderCommunityWhyBlock()}
+        <div class="community-grid">
+          ${communityCards.map((card) => renderCommunityCard(card)).join('')}
+        </div>
       </section>
     </div>
   `
 }
 
-function renderWorkflowTimeline(): string {
-  const items = workflowSteps
-    .map((step, index) => {
-      const connector =
-        index < workflowSteps.length - 1
-          ? `<li class="workflow-connector" aria-hidden="true">→</li>`
-          : ''
-
-      return `
-        <li class="workflow-step" data-workflow-step="${step.id}">
-          <button
-            type="button"
-            class="workflow-step-button"
-            data-workflow-step-button
-            aria-expanded="false"
-            aria-controls="workflow-detail-${step.id}"
-          >
-            <strong class="workflow-step-name">${step.name}</strong>
-            <span class="workflow-step-desc">${step.description}</span>
-            <span class="workflow-step-detail" id="workflow-detail-${step.id}">
-              <span class="workflow-step-detail-inner">
-                <span class="workflow-step-detail-text">${step.detail}</span>
-              </span>
-            </span>
-          </button>
-        </li>
-        ${connector}
-      `
-    })
-    .join('')
-
-  return `
-    <div class="workflow-panel">
-      <div class="workflow-panel-header">
-        <h3 class="workflow-panel-title">Project Flow</h3>
-        <p class="workflow-panel-hint">Hover or tap a step to learn more</p>
-      </div>
-      <ol class="workflow-timeline" aria-label="Typical CBS project flow">
-        ${items}
-      </ol>
-    </div>
-  `
-}
-
-function attachWorkflowSteps(): void {
-  const steps = Array.from(
-    document.querySelectorAll<HTMLLIElement>('[data-workflow-step]'),
-  )
-
-  if (steps.length === 0) {
-    return
-  }
-
-  const touchPreferred = window.matchMedia('(hover: none)')
-
-  const setExpandedStep = (target: HTMLLIElement | null): void => {
-    steps.forEach((step) => {
-      const button = step.querySelector<HTMLButtonElement>(
-        '[data-workflow-step-button]',
-      )
-      const isExpanded = step === target
-
-      step.classList.toggle('is-expanded', isExpanded)
-      button?.setAttribute('aria-expanded', isExpanded ? 'true' : 'false')
-    })
-  }
-
-  steps.forEach((step) => {
-    const button = step.querySelector<HTMLButtonElement>(
-      '[data-workflow-step-button]',
-    )
-
-    if (!button) {
-      return
-    }
-
-    button.addEventListener('click', () => {
-      if (!touchPreferred.matches) {
-        return
-      }
-
-      const isExpanded = step.classList.contains('is-expanded')
-      setExpandedStep(isExpanded ? null : step)
-    })
-  })
-}
-
 function renderLiquiditySection(): string {
-  const providers = liquidityProviders
-    .map(
-      (provider) => `
-        <a
-          class="liquidity-provider"
-          href="${provider.url}"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="${provider.name}"
-        >
-          <img
-            class="liquidity-provider-logo"
-            src="${provider.logoSrc}"
-            alt=""
-            loading="lazy"
-          />
-          <span class="liquidity-provider-name">${provider.name}</span>
-        </a>
-      `,
-    )
-    .join('')
-
   return `
-    <div class="liquidity-panel">
+    <div class="liquidity-section-content">
       ${renderLiquidityEducation()}
-      <div class="liquidity-providers">
-        ${providers}
-      </div>
+      ${renderLiquidityProviderCards()}
       <p class="liquidity-panel-note">
         Always understand liquidity risks before providing liquidity.
       </p>
@@ -532,17 +412,20 @@ function renderToolchainSection(): string {
   return `
     <div class="desktop-only">
       <section
-        class="page-section toolchain-section"
-        aria-labelledby="toolchain-heading"
+        class="page-section tools-section"
+        aria-labelledby="tools-heading"
       >
-        <h2 class="section-title" id="toolchain-heading">CBS Toolchain</h2>
-        <p class="section-subtitle">
-          Everything you need to go from a new wallet to a public Solana project.
-        </p>
+        ${renderCommunityMessage()}
+        ${renderWalletLinksSection()}
+        ${renderToolsEcosystemIntro()}
+        ${renderInteractiveToolsHub()}
+      </section>
 
-        ${renderInteractiveToolsDesktop()}
-
-        ${renderWorkflowTimeline()}
+      <section
+        class="page-section"
+        aria-labelledby="liquidity-heading"
+      >
+        <h2 class="section-title" id="liquidity-heading">Liquidity</h2>
         ${renderLiquiditySection()}
       </section>
     </div>
@@ -594,77 +477,62 @@ function renderShowcaseSection(): string {
   `
 }
 
-function renderResourceMarqueeSequence(): string {
-  return resources
-    .map((resource) => {
-      return `
+function renderSiteFooter(): string {
+  return `
+    <footer class="site-footer">
+      <section class="footer-open-source" aria-labelledby="footer-open-title">
+        <h2 class="footer-open-title" id="footer-open-title">Built in the Open</h2>
+        <p class="footer-open-text">
+          CBS Tools is developed publicly and transparently.
+          Source code, improvements and community contributions can be followed on GitHub.
+        </p>
         <a
-          class="resource-marquee-link"
-          href="${resource.url}"
+          class="footer-github-link"
+          href="https://github.com/smitskecbs"
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="Visit CBS on GitHub"
         >
-          ${resource.name}
+          <svg class="footer-github-icon" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+            <path
+              d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"
+              fill="currentColor"
+            />
+          </svg>
+          <span>GitHub</span>
         </a>
-        <span class="resource-marquee-separator" aria-hidden="true">•</span>
-      `
-    })
-    .join('')
-}
-
-function renderResourcesMarquee(): string {
-  const sequence = renderResourceMarqueeSequence()
-
-  return `
-    <div class="resources-marquee" tabindex="0" aria-label="Trusted Solana resources">
-      <div class="resources-marquee-track">
-        <div class="resources-marquee-group">${sequence}</div>
-        <div class="resources-marquee-group" aria-hidden="true">${sequence}</div>
-      </div>
-    </div>
+        <p class="footer-badge-row">
+          Open Source • Community Driven • Built on Solana
+        </p>
+      </section>
+      <p class="site-footer-copy">Community-built tools for Solana builders.</p>
+    </footer>
   `
 }
 
 function renderDonationSection(): string {
   return `
-    <section
-      class="page-section mango-donation-section"
-      aria-labelledby="mango-donation-title"
-    >
-      <div class="mango-donation-card">
-        <h2 class="mango-donation-title" id="mango-donation-title">
-          Support CBS Ecosystem Development
-        </h2>
-        <p class="mango-donation-text">
-          Donations help fund development, infrastructure, liquidity, and future CBS ecosystem tools.
+    <section class="support-section" aria-labelledby="support-title">
+      <div class="support-card">
+        <p class="support-title" id="support-title">Support CBS Ecosystem</p>
+        <p class="support-text">
+          Optional donations help fund development and infrastructure.
         </p>
-        <ul class="mango-donation-points" aria-label="What support helps fund">
-          <li>Liquidity</li>
-          <li>Development</li>
-          <li>Launch tools</li>
-        </ul>
-        <p class="mango-donation-wallet-label">Wallet address</p>
-        <code
-          class="mango-donation-wallet"
-          data-mango-donation-wallet
-        >${DONATION_WALLET}</code>
+        <code class="support-wallet" data-mango-donation-wallet>${DONATION_WALLET}</code>
         <button
           type="button"
-          class="secondary-btn mango-donation-copy-btn"
+          class="secondary-btn support-copy-btn"
           data-mango-donation-copy
         >
-          Copy Address
+          Copy address
         </button>
         <p
-          class="mango-donation-confirm"
+          class="support-confirm"
           data-mango-donation-confirm
           hidden
           aria-live="polite"
         >
           Address copied.
-        </p>
-        <p class="mango-donation-disclaimer">
-          No promises. No pressure. Only support if you believe in the build.
         </p>
       </div>
     </section>
@@ -735,28 +603,13 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     ${renderShowcaseSection()}
     ${renderCommunitySection()}
 
-    <div class="desktop-only">
-      <section
-        class="page-section"
-        aria-labelledby="resources-heading"
-      >
-        <h2 class="section-title" id="resources-heading">Trusted Resources</h2>
-        ${renderResourcesMarquee()}
-      </section>
-    </div>
-
-    ${renderJourneySummary()}
-
     ${renderDonationSection()}
 
-    <footer class="site-footer">
-      <p>Community-built tools for Solana builders.</p>
-    </footer>
+    ${renderSiteFooter()}
 
     ${renderToolModal()}
   </main>
 `
 
 attachDonationSection()
-attachWorkflowSteps()
 attachToolsHub()
