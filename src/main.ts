@@ -2,19 +2,12 @@ import './style.css'
 import bannerUrl from './assets/banner.png'
 import mangoLogo from './assets/mango-logo.png'
 import toolLogoUrl from './assets/tool-logo.png'
-import tokenBuilderLogo from './assets/tools/token-builder.png'
-import tokenLauncherLogo from './assets/tools/token-launcher.png'
-import walletGeneratorLogo from './assets/tools/wallet-generator.png'
-
-type ToolchainCard = {
-  toolName: string
-  headline: string
-  description: string
-  whyItMatters: string
-  keyPoints: string[]
-  url: string
-  logoUrl: string
-}
+import {
+  attachToolsHub,
+  renderInteractiveToolsDesktop,
+  renderInteractiveToolsMobile,
+  renderToolModal,
+} from './toolsHub'
 
 type WorkflowStep = {
   id: string
@@ -49,72 +42,10 @@ type CommunityCard = {
 
 const DONATION_WALLET = 'ManGofryUWC5VWk7t4ATP32qJtGVBBNoVi2AQ9HyR9J'
 
-const TOOL_URLS = {
-  wallet: 'https://wallet.cbs-coin.com',
-  tokenBuilder: 'https://token-builder.cbs-coin.com',
-  tokenLauncher: 'https://token-launcher.cbs-coin.com',
-} as const
-
 const MANGO_URLS = {
   website: 'https://mangomeme.fun/',
   launcher: 'https://token-launcher.cbs-coin.com/token/mango',
 } as const
-
-const toolchainCards: ToolchainCard[] = [
-  {
-    toolName: 'Wallet Generator',
-    headline: 'Create a Solana Wallet',
-    description:
-      'Generate a standard or vanity Solana wallet locally in your browser.',
-    whyItMatters:
-      'Your wallet is your identity on Solana. You need a wallet before you can create tokens, hold assets or interact with blockchain applications.',
-    keyPoints: [
-      'Private keys stay on your device',
-      'Compatible with Phantom, Solflare and Backpack',
-      'Vanity wallet support',
-    ],
-    url: TOOL_URLS.wallet,
-    logoUrl: walletGeneratorLogo,
-  },
-  {
-    toolName: 'Token Builder',
-    headline: 'Create a Solana Token',
-    description:
-      'Create a token with metadata, supply controls and custom settings.',
-    whyItMatters:
-      'A token is the foundation of your project. This is where you define your supply, branding and token settings.',
-    keyPoints: [
-      'Metadata support',
-      'Authority controls',
-      'Vanity mint creation',
-    ],
-    url: TOOL_URLS.tokenBuilder,
-    logoUrl: tokenBuilderLogo,
-  },
-  {
-    toolName: 'Token Launcher',
-    headline: 'Launch Your Project',
-    description:
-      'Create a project page, collect interest and grow your community.',
-    whyItMatters:
-      'Creating a token is only the beginning. Projects grow through visibility, updates and community building.',
-    keyPoints: [
-      'Project listings',
-      'Verification system',
-      'Community updates',
-    ],
-    url: TOOL_URLS.tokenLauncher,
-    logoUrl: tokenLauncherLogo,
-  },
-]
-
-type MobileToolCard = {
-  name: string
-  description: string
-  whyItMatters: string
-  url: string
-  logoUrl: string
-}
 
 const LIQUIDITY_WHY_IT_MATTERS =
   'Without liquidity, people cannot easily buy or sell your token. Liquidity connects your token to the market.'
@@ -125,33 +56,6 @@ const COMMUNITY_BENEFITS = [
   'Find bugs',
   'Support adoption',
   'Help a project grow',
-]
-
-const mobileToolCards: MobileToolCard[] = [
-  {
-    name: 'Wallet Generator',
-    description:
-      'Generate a standard or vanity Solana wallet locally in your browser. Private keys stay on your device.',
-    whyItMatters: toolchainCards[0].whyItMatters,
-    url: TOOL_URLS.wallet,
-    logoUrl: walletGeneratorLogo,
-  },
-  {
-    name: 'Token Builder',
-    description:
-      'Create a token with metadata, supply controls and custom settings. Built for Solana builders who want full control.',
-    whyItMatters: toolchainCards[1].whyItMatters,
-    url: TOOL_URLS.tokenBuilder,
-    logoUrl: tokenBuilderLogo,
-  },
-  {
-    name: 'Token Launcher',
-    description:
-      'Create a project page, collect interest and grow your community. Publish updates and make your project discoverable.',
-    whyItMatters: toolchainCards[2].whyItMatters,
-    url: TOOL_URLS.tokenLauncher,
-    logoUrl: tokenLauncherLogo,
-  },
 ]
 
 const mobileFlowSteps = [
@@ -444,30 +348,6 @@ function setSiteFavicon(): void {
 
 setSiteFavicon()
 
-function renderMobileToolCard(card: MobileToolCard): string {
-  return `
-    <article class="mobile-tool-card">
-      <img
-        class="mobile-tool-logo"
-        src="${card.logoUrl}"
-        alt=""
-        loading="lazy"
-      />
-      <h3 class="mobile-tool-title">${card.name}</h3>
-      <p class="mobile-tool-description">${card.description}</p>
-      ${renderWhyBlock(card.whyItMatters)}
-      <a
-        class="mobile-tool-btn"
-        href="${card.url}"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Open Tool
-      </a>
-    </article>
-  `
-}
-
 function renderMobileLayout(): string {
   const liquidityLinks = liquidityProviders
     .map(
@@ -496,9 +376,7 @@ function renderMobileLayout(): string {
         <p class="mobile-section-intro">
           Everything you need to go from a new wallet to a public Solana project.
         </p>
-        <div class="mobile-tool-list">
-          ${mobileToolCards.map((card) => renderMobileToolCard(card)).join('')}
-        </div>
+        ${renderInteractiveToolsMobile()}
       </section>
 
       <section class="mobile-section" aria-labelledby="mobile-flow-heading">
@@ -524,41 +402,6 @@ function renderMobileLayout(): string {
         ${renderCommunityWhyBlock()}
       </section>
     </div>
-  `
-}
-
-function renderToolchainCard(card: ToolchainCard): string {
-  const points = card.keyPoints
-    .map((point) => `<li class="toolchain-point">${point}</li>`)
-    .join('')
-
-  return `
-    <a
-      class="toolchain-card"
-      href="${card.url}"
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="${card.toolName}"
-    >
-      <div class="toolchain-logo-stage">
-        <img
-          class="toolchain-logo"
-          src="${card.logoUrl}"
-          alt=""
-          loading="lazy"
-        />
-        <p class="toolchain-tool-name">${card.toolName}</p>
-      </div>
-      <div class="toolchain-card-content">
-        <h3 class="toolchain-headline">${card.headline}</h3>
-        <p class="toolchain-description">${card.description}</p>
-        ${renderWhyBlock(card.whyItMatters)}
-        <ul class="toolchain-points" aria-label="${card.headline} highlights">
-          ${points}
-        </ul>
-        <span class="toolchain-card-action">Open tool ↗</span>
-      </div>
-    </a>
   `
 }
 
@@ -697,9 +540,7 @@ function renderToolchainSection(): string {
           Everything you need to go from a new wallet to a public Solana project.
         </p>
 
-        <div class="toolchain-grid">
-          ${toolchainCards.map((card) => renderToolchainCard(card)).join('')}
-        </div>
+        ${renderInteractiveToolsDesktop()}
 
         ${renderWorkflowTimeline()}
         ${renderLiquiditySection()}
@@ -911,8 +752,11 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     <footer class="site-footer">
       <p>Community-built tools for Solana builders.</p>
     </footer>
+
+    ${renderToolModal()}
   </main>
 `
 
 attachDonationSection()
 attachWorkflowSteps()
+attachToolsHub()
