@@ -264,7 +264,25 @@ body {
   display: grid;
   gap: 10px;
   width: 100%;
+  margin-top: 0;
+}
+
+.swipe-row-wrap {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   margin-top: var(--space-sm);
+}
+
+.mobile-swipe-hint,
+.mobile-swipe-dots {
+  display: none;
+}
+
+.swipe-row-fade {
+  position: relative;
+  width: 100%;
+  min-width: 0;
 }
 
 .partner-links-row--wallets,
@@ -1256,16 +1274,57 @@ body.tool-modal-open {
     row-gap: 6px;
   }
 
+  .mobile-swipe-hint {
+    display: block;
+    margin: 0 0 8px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: #999999;
+    text-align: center;
+  }
+
+  .mobile-swipe-dots {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 10px;
+  }
+
+  .mobile-swipe-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 999px;
+    background: rgba(216, 111, 0, 0.22);
+  }
+
+  .swipe-row-fade::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 36px;
+    pointer-events: none;
+    z-index: 1;
+    background: linear-gradient(
+      to right,
+      rgba(245, 240, 232, 0),
+      rgba(245, 240, 232, 0.92)
+    );
+  }
+
   .partner-links-row--wallets,
   .partner-links-row--liquidity {
     display: flex;
+    gap: 10px;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
-    scroll-padding-inline: 16px;
+    scroll-padding-inline: 12px;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    max-width: none;
-    padding: 2px 16px 4px;
+    max-width: 100%;
+    padding: 2px 0 4px;
   }
 
   .partner-links-row--wallets::-webkit-scrollbar,
@@ -1274,16 +1333,18 @@ body.tool-modal-open {
   }
 
   .partner-link-card {
-    flex: 0 0 min(42vw, 160px);
-    scroll-snap-align: center;
+    flex: 0 0 44vw;
+    max-width: 168px;
+    scroll-snap-align: start;
   }
 
   .tools-hub-row {
     overflow-x: auto;
     scroll-snap-type: x mandatory;
-    scroll-padding-inline: 16px;
+    scroll-padding-inline: 12px;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
+    max-width: 100%;
   }
 
   .tools-hub-row::-webkit-scrollbar {
@@ -1293,14 +1354,15 @@ body.tool-modal-open {
   .tools-hub-track {
     justify-content: flex-start;
     width: max-content;
-    padding: 4px 16px 8px;
+    gap: 12px;
+    padding: 4px 0 8px;
   }
 
   .tools-hub-card {
-    flex: 0 0 min(78vw, 280px);
-    max-width: min(78vw, 280px);
+    flex: 0 0 72vw;
+    max-width: 280px;
     min-height: 260px;
-    scroll-snap-align: center;
+    scroll-snap-align: start;
   }
 
   .showcase-card {

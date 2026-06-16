@@ -1,4 +1,5 @@
 import { CBS_TOOLS, CBS_TOOLS_BY_ID } from './toolsConfig'
+import { renderSwipeRow } from './swipeRow'
 
 function renderToolTriggerCard(tool: (typeof CBS_TOOLS)[number]): string {
   return `
@@ -25,19 +26,22 @@ function renderToolTriggerCard(tool: (typeof CBS_TOOLS)[number]): string {
 
 export function renderInteractiveToolsHub(): string {
   const cards = CBS_TOOLS.map((tool) => renderToolTriggerCard(tool)).join('')
+  const row = `
+    <div
+      class="tools-hub-row"
+      tabindex="0"
+      role="list"
+      aria-label="CBS Tools"
+    >
+      <div class="tools-hub-track">
+        ${cards}
+      </div>
+    </div>
+  `
 
   return `
     <div class="tools-hub">
-      <div
-        class="tools-hub-row"
-        tabindex="0"
-        role="list"
-        aria-label="CBS Tools"
-      >
-        <div class="tools-hub-track">
-          ${cards}
-        </div>
-      </div>
+      ${renderSwipeRow(row, 4)}
     </div>
   `
 }

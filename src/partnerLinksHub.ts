@@ -3,6 +3,7 @@ import {
   WALLET_LINKS,
   type PartnerLink,
 } from './partnerLinksConfig'
+import { renderSwipeRow } from './swipeRow'
 
 function renderPartnerLinkCard(link: PartnerLink): string {
   return `
@@ -27,15 +28,21 @@ function renderPartnerLinkCard(link: PartnerLink): string {
 export function renderPartnerLinkCards(
   links: PartnerLink[],
   modifier = '',
+  swipeDotCount?: number,
 ): string {
   const cards = links.map((link) => renderPartnerLinkCard(link)).join('')
   const modifierClass = modifier ? ` ${modifier}` : ''
-
-  return `
+  const row = `
     <div class="partner-links-row${modifierClass}" role="list">
       ${cards}
     </div>
   `
+
+  if (swipeDotCount) {
+    return renderSwipeRow(row, swipeDotCount)
+  }
+
+  return row
 }
 
 export function renderWalletLinksSection(): string {
@@ -60,7 +67,7 @@ export function renderWalletLinksSection(): string {
       <p class="partner-links-subtitle">
         Choose a wallet or swap platform to get started.
       </p>
-      ${renderPartnerLinkCards(WALLET_LINKS, 'partner-links-row--wallets')}
+      ${renderPartnerLinkCards(WALLET_LINKS, 'partner-links-row--wallets', 4)}
     </section>
   `
 }
@@ -69,5 +76,6 @@ export function renderLiquidityProviderCards(): string {
   return renderPartnerLinkCards(
     LIQUIDITY_PROVIDER_LINKS,
     'partner-links-row--liquidity',
+    3,
   )
 }
