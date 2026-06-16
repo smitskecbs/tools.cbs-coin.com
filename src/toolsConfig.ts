@@ -1,4 +1,5 @@
 import tokenBuilderLogo from './assets/tools/token-builder.png'
+import tokenCheckerLogo from './assets/tools/token-checker.png'
 import tokenLauncherLogo from './assets/tools/token-launcher.png'
 import tokenLockerLogo from './assets/tools/token-locker.png'
 import walletGeneratorLogo from './assets/tools/wallet-generator.png'
@@ -8,6 +9,7 @@ export const TOOL_URLS = {
   tokenBuilder: 'https://token-builder.cbs-coin.com',
   tokenLauncher: 'https://token-launcher.cbs-coin.com',
   tokenLocker: 'https://locker.cbs-coin.com',
+  tokenChecker: 'https://token-checker.cbs-coin.com',
 } as const
 
 export type CbsTool = {
@@ -138,6 +140,36 @@ export const CBS_TOOLS: CbsTool[] = [
     status: 'Live',
     url: TOOL_URLS.tokenLocker,
     logoUrl: tokenLockerLogo,
+  },
+  {
+    id: 'token-checker',
+    name: 'CBS Token Checker',
+    headline:
+      'Analyze Solana tokens for holder concentration, liquidity, authorities and basic risk signals before you buy, hold or promote a token.',
+    whatItDoes:
+      'Analyze Solana tokens for holder concentration, liquidity, mint and freeze authorities, and basic risk signals before you buy, hold or promote a token.',
+    whenToUseIt:
+      'Use it before buying, holding, or promoting any Solana token when you want a quick sanity check on supply, holders, and on-chain red flags.',
+    whoItIsFor:
+      'Traders, creators, and communities who want fast token research without switching between multiple dashboards.',
+    usageSteps: [
+      'Open CBS Token Checker.',
+      'Paste the token mint address.',
+      'Review supply, holder concentration, and authority status.',
+      'Check liquidity and basic risk warnings.',
+      'Use the findings to decide whether to buy, hold, or promote responsibly.',
+    ],
+    benefits: [
+      'Holder concentration at a glance',
+      'Mint and freeze authority checks',
+      'Liquidity and basic risk signals',
+      'Helpful before buying or promoting a token',
+    ],
+    warning:
+      'This tool does not provide financial advice. Always do your own research.',
+    status: 'Live',
+    url: TOOL_URLS.tokenChecker,
+    logoUrl: tokenCheckerLogo,
   },
 ]
 

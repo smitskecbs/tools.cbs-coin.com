@@ -41,7 +41,7 @@ export function renderInteractiveToolsHub(): string {
 
   return `
     <div class="tools-hub">
-      ${renderSwipeRow(row, 4)}
+      ${renderSwipeRow(row, CBS_TOOLS.length)}
     </div>
   `
 }
