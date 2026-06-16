@@ -1457,6 +1457,21 @@ body.tool-modal-open {
   .mobile-only {
     display: none;
   }
+
+  .tools-hub-row {
+    overflow: visible;
+  }
+
+  .tools-hub-track {
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .tools-hub-card {
+    flex: 0 1 calc((100% - 48px) / 4);
+    max-width: calc((100% - 48px) / 4);
+  }
 }
 
 .site-footer {
