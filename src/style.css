@@ -1062,6 +1062,34 @@ body.tool-modal-open {
   margin-top: 0;
 }
 
+.tool-modal-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.tool-modal-copy {
+  width: 100%;
+  min-height: 48px;
+  margin-top: 0;
+}
+
+.tool-modal-copy-confirm {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 600;
+  color: #15803d;
+  text-align: center;
+}
+
+.tool-modal-wallet-tip {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #777777;
+  text-align: center;
+}
+
 .mobile-only {
   display: none;
 }
@@ -1241,8 +1269,12 @@ body.tool-modal-open {
     padding: 14px 18px 18px;
   }
 
-  .tool-modal-footer .primary-btn {
-    width: 100%;
+  .tool-modal-actions {
+    gap: 8px;
+  }
+
+  .tool-modal-open,
+  .tool-modal-copy {
     min-height: 44px;
   }
 

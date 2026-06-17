@@ -103,15 +103,36 @@ export function renderToolModal(): string {
         </div>
         <div class="tool-modal-footer">
           <p class="tool-modal-status" data-tool-modal-status>Live</p>
-          <a
-            class="primary-btn tool-modal-open"
-            data-tool-modal-open
-            href="#"
-            target="_blank"
-            rel="noopener noreferrer"
+          <div class="tool-modal-actions">
+            <a
+              class="primary-btn tool-modal-open"
+              data-tool-modal-open
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Open Tool
+            </a>
+            <button
+              type="button"
+              class="secondary-btn tool-modal-copy"
+              data-tool-modal-copy
+            >
+              Copy Link
+            </button>
+          </div>
+          <p
+            class="tool-modal-copy-confirm"
+            data-tool-modal-copy-confirm
+            hidden
+            aria-live="polite"
           >
-            Open Tool
-          </a>
+            Link copied
+          </p>
+          <p class="tool-modal-wallet-tip">
+            Having wallet connection issues on mobile?
+            Open the copied link inside the Phantom, Solflare or Backpack browser.
+          </p>
         </div>
       </div>
     </div>
@@ -137,6 +158,10 @@ export function attachToolsHub(): void {
   const status = modal.querySelector<HTMLElement>('[data-tool-modal-status]')
   const logo = modal.querySelector<HTMLImageElement>('[data-tool-modal-logo]')
   const openLink = modal.querySelector<HTMLAnchorElement>('[data-tool-modal-open]')
+  const copyButton = modal.querySelector<HTMLButtonElement>('[data-tool-modal-copy]')
+  const copyConfirm = modal.querySelector<HTMLElement>(
+    '[data-tool-modal-copy-confirm]',
+  )
 
   if (
     !title ||
@@ -148,12 +173,51 @@ export function attachToolsHub(): void {
     !benefits ||
     !status ||
     !logo ||
-    !openLink
+    !openLink ||
+    !copyButton ||
+    !copyConfirm
   ) {
     return
   }
 
   let activeTrigger: HTMLElement | null = null
+  let activeToolUrl = ''
+  let copyConfirmTimeoutId: number | undefined
+
+  const resetCopyConfirm = (): void => {
+    if (copyConfirmTimeoutId !== undefined) {
+      window.clearTimeout(copyConfirmTimeoutId)
+      copyConfirmTimeoutId = undefined
+    }
+
+    copyConfirm.hidden = true
+    copyConfirm.textContent = 'Link copied'
+  }
+
+  const showCopyConfirm = (message: string): void => {
+    resetCopyConfirm()
+    copyConfirm.hidden = false
+    copyConfirm.textContent = message
+
+    copyConfirmTimeoutId = window.setTimeout(() => {
+      copyConfirm.hidden = true
+      copyConfirm.textContent = 'Link copied'
+      copyConfirmTimeoutId = undefined
+    }, 2400)
+  }
+
+  const copyToolUrl = async (): Promise<void> => {
+    if (!activeToolUrl) {
+      return
+    }
+
+    try {
+      await navigator.clipboard.writeText(activeToolUrl)
+      showCopyConfirm('Link copied')
+    } catch {
+      showCopyConfirm('Copy failed. Select and copy the link manually.')
+    }
+  }
 
   const closeModal = (): void => {
     modal.hidden = true
@@ -170,6 +234,7 @@ export function attachToolsHub(): void {
     }
 
     activeTrigger = trigger
+    resetCopyConfirm()
     title.textContent = tool.name
     what.textContent = tool.whatItDoes
     when.textContent = tool.whenToUseIt
@@ -177,6 +242,7 @@ export function attachToolsHub(): void {
     status.textContent = tool.status
     logo.src = tool.logoUrl
     logo.alt = `${tool.name} logo`
+    activeToolUrl = tool.url
     openLink.href = tool.url
     steps.innerHTML = tool.usageSteps
       .map((step) => `<li>${step}</li>`)
@@ -211,6 +277,12 @@ export function attachToolsHub(): void {
     if (target.closest('[data-tool-modal-close]')) {
       event.preventDefault()
       closeModal()
+      return
+    }
+
+    if (target.closest('[data-tool-modal-copy]')) {
+      event.preventDefault()
+      void copyToolUrl()
     }
   })
 
