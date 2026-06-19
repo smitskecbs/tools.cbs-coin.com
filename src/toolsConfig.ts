@@ -22,7 +22,8 @@ export type CbsTool = {
   usageSteps: string[]
   benefits: string[]
   warning?: string
-  status: 'Live'
+  programId?: string
+  status: string
   url: string
   logoUrl: string
 }
@@ -117,27 +118,35 @@ export const CBS_TOOLS: CbsTool[] = [
   {
     id: 'token-locker',
     name: 'CBS Token Locker',
-    headline: 'Lock tokens and LP positions.',
+    headline: 'Lock SPL tokens, LP tokens and split schedules with public proof.',
     whatItDoes:
-      'Lock SPL tokens or LP tokens on Solana with a public unlock date to show long-term commitment, transparency, and trust with your community.',
+      'Lock SPL tokens, LP tokens, or create split lock schedules on Solana. Every lock receives a public certificate that can be shared with your community.',
     whenToUseIt:
-      'Use it after you hold tokens or LP tokens that you want to lock on-chain for a defined period.',
+      'Use it when you want to show locked token supply, locked liquidity, or a scheduled token release plan.',
     whoItIsFor:
-      'Projects and communities that already have tokens or LP tokens and want to demonstrate locked supply or liquidity.',
+      'Solana projects, communities and builders that want to demonstrate transparency and long-term commitment.',
     usageSteps: [
-      'Open CBS Token Locker.',
-      'Connect your wallet.',
-      'Select SPL tokens or LP tokens to lock.',
-      'Choose lock duration and unlock date.',
-      'Confirm the on-chain lock.',
+      'Open CBS Token Locker',
+      'Connect your wallet',
+      'Select SPL Token or LP Token',
+      'Enter the token mint address',
+      'Choose a single lock or split lock schedule',
+      'Set amount and unlock date(s)',
+      'Confirm the transaction',
+      'Share the public lock certificate',
     ],
     benefits: [
-      'Lock SPL tokens or LP tokens on-chain',
-      'Public unlock date for transparency',
-      'Shows long-term commitment',
-      'Useful for community and launch projects',
+      'SPL token locks',
+      'LP token locks',
+      'Split lock schedules',
+      'Public lock certificates',
+      'Mainnet deployed',
+      'Phantom, Solflare and Backpack support',
     ],
-    status: 'Live',
+    programId: 'DA1sh6XTa13QQ23sLNdcPfCZF5SGMKXXYLxcfAJYcCmU',
+    warning:
+      'Locks improve transparency and demonstrate commitment, but they do not guarantee project quality, token value or future performance.',
+    status: 'MAINNET LIVE',
     url: TOOL_URLS.tokenLocker,
     logoUrl: tokenLockerLogo,
   },

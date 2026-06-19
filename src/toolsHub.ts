@@ -100,6 +100,14 @@ export function renderToolModal(): string {
             <h4 class="tool-modal-section-title">Benefits</h4>
             <ul class="tool-modal-benefits" data-tool-modal-benefits></ul>
           </section>
+          <section
+            class="tool-modal-section tool-modal-program"
+            data-tool-modal-program-section
+            hidden
+          >
+            <h4 class="tool-modal-section-title">Program ID</h4>
+            <code class="tool-modal-program-id" data-tool-modal-program-id></code>
+          </section>
         </div>
         <div class="tool-modal-footer">
           <p class="tool-modal-status" data-tool-modal-status>Live</p>
@@ -162,6 +170,10 @@ export function attachToolsHub(): void {
   const copyConfirm = modal.querySelector<HTMLElement>(
     '[data-tool-modal-copy-confirm]',
   )
+  const programSection = modal.querySelector<HTMLElement>(
+    '[data-tool-modal-program-section]',
+  )
+  const programId = modal.querySelector<HTMLElement>('[data-tool-modal-program-id]')
 
   if (
     !title ||
@@ -175,7 +187,9 @@ export function attachToolsHub(): void {
     !logo ||
     !openLink ||
     !copyButton ||
-    !copyConfirm
+    !copyConfirm ||
+    !programSection ||
+    !programId
   ) {
     return
   }
@@ -257,6 +271,14 @@ export function attachToolsHub(): void {
     } else {
       warning.hidden = true
       warning.textContent = ''
+    }
+
+    if (tool.programId) {
+      programSection.hidden = false
+      programId.textContent = tool.programId
+    } else {
+      programSection.hidden = true
+      programId.textContent = ''
     }
 
     modal.hidden = false

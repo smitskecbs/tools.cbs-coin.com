@@ -1041,6 +1041,21 @@ body.tool-modal-open {
   margin-top: 4px;
 }
 
+.tool-modal-program-id {
+  display: block;
+  margin: 0;
+  padding: 10px 12px;
+  overflow-wrap: anywhere;
+  word-break: break-all;
+  border-radius: 10px;
+  border: 1px solid rgba(216, 111, 0, 0.12);
+  background: rgba(255, 252, 248, 0.95);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.45;
+  color: #444444;
+}
+
 .tool-modal-status {
   margin: 0;
   display: inline-flex;
